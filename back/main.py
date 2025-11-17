@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 import threading
 import random
 import time
@@ -8,6 +9,9 @@ from sdn_controller import SimpleSDNController
 from analyzer import TrafficAnalyzer
 
 app = Flask(__name__)
+
+CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+
 
 controller = SimpleSDNController()
 analyzer = TrafficAnalyzer(controller)
@@ -36,7 +40,6 @@ class NetworkSimulator:
                 dst = f"H{random.randint(1, 6)}"
                 pkt = host.send_packet(dst)
                 self.controller.route_packet(pkt)
-
             time.sleep(0.1)
 
     def generate_attack_traffic(self):
@@ -46,7 +49,6 @@ class NetworkSimulator:
                 for _ in range(40):
                     pkt = attacker.send_packet("H4", traffic_type=TrafficType.ATTACK)
                     controller.route_packet(pkt)
-
             time.sleep(0.5)
 
     def start(self):
