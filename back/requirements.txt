@@ -1,0 +1,7 @@
+matplotlib>=3.5.0
+numpy>=1.21.0
+scipy>=1.7.0
+flask>=2.0.0           
+flask-socketio>=5.0.0  
+eventlet>=0.33.0      
+pytest>=7.0.0          # para tests
